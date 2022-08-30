@@ -77,7 +77,10 @@ int main (int argc, char* argv[]){
 
         std::string shorterLine;
         if (line1.length() < line2.length()) {
-
+            shorterLine = line1;
+        }
+        else {
+            shorterLine = line2;
         }
 
    }
