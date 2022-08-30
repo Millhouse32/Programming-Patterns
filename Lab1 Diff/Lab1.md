@@ -17,6 +17,7 @@ You are allowed to use getline() and string comparison functions in the implemen
 Milestone. Code that inputs two lines from two different files and determines whether they are the same. 
 Hint. The command line arguments are input as C-style strings arguments to main(). See follwong code for an example of handling them. 
 
+```
 #include  <iostream>
 using namespace std; 
 int main(int argc, char* argv[])
@@ -24,6 +25,7 @@ int main(int argc, char* argv[])
 	for(int i=0; i < argc; ++i) 
 		cout << argv[i] << endl; 
 }
+```
 
 To configure command-line arguments for an MS Visual Studio project, right-click Solution Explorer, select "properties" from the drop-down menu, go to Configuration Properties Debugging and set "Command Arguments" in the properties list. 
 To create a string of spaces of a particular length use this form of initialization: string spaceString(length, ' ');, or use assign operator: spaceString.assign(length, ' '); 
