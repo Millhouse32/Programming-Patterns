@@ -5,28 +5,8 @@
     Author: Nicholas Miller
 */
 #include <iostream>
-
-// Function to compare both text files
-void compareFiles(FILE *file1, FILE *file2) {
-    
-    // get character from two files and store then in ch1 and ch2
-    char ch1 = getc(file1);
-    char ch2 = getc(file2);
-
-   // track position and line
-   int pos = 0, line = 1;
-
-   // iteratore loop until end of file is reached
-   while(ch1 != EOF && ch2 != EOF) {
-       pos++;
-
-       if (ch1 == '\n' && ch2 == '\n'){
-          line++;
-          pos = 0;
-       }  
-   } 
-
-}
+#include <fstream>
+#include <string>
 
 int main (int argc, char* argv[]){
 
@@ -37,15 +17,70 @@ int main (int argc, char* argv[]){
     }
    
    // variables that hold the file name
-   const char* filename1;
-   const char* filename2;
+   std::string filename1;
+   std::string filename2;
 
    filename1 = argv[1];
    filename2 = argv[2];
    
    // opens both files as read only
-   FILE *file1 = fopen(filename1, "r");
-   FILE *file2 = fopen(filename2, "r");
+   std::ifstream file1;
+   std::ifstream file2;
+
+   // open file
+   file1.open(filename1);
+   
+   if (file1.fail()){
+      std::cerr << "Error opening file 1" << std::endl;
+      exit(0);
+   }
+
+   file2.open(filename2);
+   if (file2.fail()){
+      std::cerr << "Error opening file 2" << std::endl;
+      exit(0);
+   }
+
+   // line count spaceCount and difference
+   int lineCount = 1;
+   int spaceCount = 0;
+   bool difference = false;
+   
+   std::string line1;
+   std::string line2;
+
+   while(!file1.eof() || !file2.eof()){
+
+        if (file1.eof()){
+            // if file 1 is shorter than file 2
+            line1.assign(line2.length(), ' ');
+        }
+        else {
+            // read one line from file 1
+            getline(file1, line1);
+            if (line1.length() == 0) {
+                line1.assign(line2.length(), ' ');
+            }
+        }
+
+        if (file2.eof()){
+            // if file 2 is shorter than file 1
+            line2.assign(line1.length(), ' ');
+        }
+        else {
+            // read one line from file 2
+            getline(file2, line2);
+            if (line2.length() == 0) {
+                line1.assign(line1.length(), ' ');
+            }
+        }
+
+        std::string shorterLine;
+        if (line1.length() < line2.length()) {
+
+        }
+
+   }
 
    return 0;
 }
