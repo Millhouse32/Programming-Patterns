@@ -6,8 +6,26 @@
 */
 #include <iostream>
 
-void compareFiles(FILE *file1, *file2) {
+// Function to compare both text files
+void compareFiles(FILE *file1, FILE *file2) {
     
+    // get character from two files and store then in ch1 and ch2
+    char ch1 = getc(file1);
+    char ch2 = getc(file2);
+
+   // track position and line
+   int pos = 0, line = 1;
+
+   // iteratore loop until end of file is reached
+   while(ch1 != EOF && ch2 != EOF) {
+       pos++;
+
+       if (ch1 == '\n' && ch2 == '\n'){
+          line++;
+          pos = 0;
+       }  
+   } 
+
 }
 
 int main (int argc, char* argv[]){
