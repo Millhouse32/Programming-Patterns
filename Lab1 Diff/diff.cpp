@@ -82,8 +82,7 @@ int main (int argc, char* argv[]){
         else {
             shorterLine = line2;
         }
-
+    lineCount++;
    }
-
    return 0;
 }
