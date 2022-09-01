@@ -75,14 +75,45 @@ int main (int argc, char* argv[]){
             }
         }
 
-        std::string shorterLine;
+        // For the case that one file is at EOF and other is a blank line
+        if (line1.length() == 0 && line2.length() == 0){
+            line1.assign(1, ' ');
+            line2.assign(1, ' ');
+        }
+
+        int val;
         if (line1.length() < line2.length()) {
-            shorterLine = line1;
+            val = line1.length();
         }
         else {
-            shorterLine = line2;
+            val = line2.length();
         }
+
+        for (int i = 0; i < val; i++){
+            if (line1[i] != line2[i]) {
+                difference = true;
+                break;
+            }
+            else {
+                spaceCount++;
+            }
+        }
+
+        if (difference) {
+            std::string output = "file2.txt: " + std::to_string(lineCount) + ": ";
+            std::cout << output << line1 << std::endl;
+            std::cout << output << line2 << std::endl;
+            std::string spaces = "";
+            spaces.assign(output.length() + spaceCount, ' ');
+            std::cout << spaces << "^";
+        }
+
+    std::cout << "\n";
+    difference = false;
     lineCount++;
+    spaceCount = 0;
    }
+   file1.close();
+   file2.close();
    return 0;
 }
