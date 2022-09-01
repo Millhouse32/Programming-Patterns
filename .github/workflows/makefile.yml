@@ -1,0 +1,2 @@
+all : diff.cpp
+	clang++ -o diff diff.cpp
