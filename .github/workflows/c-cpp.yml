@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: diff.cpp
 
 on:
   push:
