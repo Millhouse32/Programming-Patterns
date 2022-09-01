@@ -5,10 +5,8 @@
     Author: Nicholas Miller
 */
 #include <iostream>
-
-void compareFiles(FILE *file1, *file2) {
-    
-}
+#include <fstream>
+#include <string>
 
 int main (int argc, char* argv[]){
 
@@ -19,15 +17,103 @@ int main (int argc, char* argv[]){
     }
    
    // variables that hold the file name
-   const char* filename1;
-   const char* filename2;
+   std::string filename1;
+   std::string filename2;
 
    filename1 = argv[1];
    filename2 = argv[2];
    
    // opens both files as read only
-   FILE *file1 = fopen(filename1, "r");
-   FILE *file2 = fopen(filename2, "r");
+   std::ifstream file1;
+   std::ifstream file2;
 
+   // open file
+   file1.open(filename1);
+   
+   if (file1.fail()){
+      std::cerr << "Error opening file 1" << std::endl;
+      exit(0);
+   }
+
+   file2.open(filename2);
+   if (file2.fail()){
+      std::cerr << "Error opening file 2" << std::endl;
+      exit(0);
+   }
+
+   // line count spaceCount and difference
+   int lineCount = 1;
+   int spaceCount = 0;
+   bool difference = false;
+   
+   std::string line1;
+   std::string line2;
+
+   while(!file1.eof() || !file2.eof()){
+
+        if (file1.eof()){
+            // if file 1 is shorter than file 2
+            line1.assign(line2.length(), ' ');
+        }
+        else {
+            // read one line from file 1
+            getline(file1, line1);
+            if (line1.length() == 0) {
+                line1.assign(line2.length(), ' ');
+            }
+        }
+
+        if (file2.eof()){
+            // if file 2 is shorter than file 1
+            line2.assign(line1.length(), ' ');
+        }
+        else {
+            // read one line from file 2
+            getline(file2, line2);
+            if (line2.length() == 0) {
+                line1.assign(line1.length(), ' ');
+            }
+        }
+
+        // For the case that one file is at EOF and other is a blank line
+        if (line1.length() == 0 && line2.length() == 0){
+            line1.assign(1, ' ');
+            line2.assign(1, ' ');
+        }
+
+        int val;
+        if (line1.length() < line2.length()) {
+            val = line1.length();
+        }
+        else {
+            val = line2.length();
+        }
+
+        for (int i = 0; i < val; i++){
+            if (line1[i] != line2[i]) {
+                difference = true;
+                break;
+            }
+            else {
+                spaceCount++;
+            }
+        }
+
+        if (difference) {
+            std::string output = "file2.txt: " + std::to_string(lineCount) + ": ";
+            std::cout << output << line1 << std::endl;
+            std::cout << output << line2 << std::endl;
+            std::string spaces = "";
+            spaces.assign(output.length() + spaceCount, ' ');
+            std::cout << spaces << "^";
+        }
+
+    std::cout << "\n";
+    difference = false;
+    lineCount++;
+    spaceCount = 0;
+   }
+   file1.close();
+   file2.close();
    return 0;
 }

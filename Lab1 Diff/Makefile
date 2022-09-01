@@ -1,7 +1,14 @@
-all: diff
+all : diff.cpp
+	clang++ -o diff diff.cpp
 
-diff:
-	clang++ diff.cpp -o diff
 
-clean:
-	rm *diff
+.SILENT:
+
+run:
+	@./diff $(filter-out $@, $(MAKECMDGOALS))
+
+%:
+	@true
+
+clean :
+	rm -f diff
