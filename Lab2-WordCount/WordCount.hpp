@@ -16,3 +16,16 @@ class WordOccurence {
     string word ;
     int num ;
 };
+
+class WordList {
+    public:
+    // add copy constructor, destructor, and overload assignment
+    void addWord(const string &);
+    void printList();
+    private:
+    // a dynamically allocated array of WordOccurrences
+    // may or may not be stored
+    WordOccurence *wordArray ;
+
+    int size ;
+};
