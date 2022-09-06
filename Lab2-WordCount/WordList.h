@@ -12,10 +12,10 @@ public:
 
     WordList(const WordList& org); // copy constructor
     ~WordList(); // destructor
-    WordList& operator = (const WordList& rhs); // overloaded assignment
+    //WordList& operator = (const WordList& rhs); // overloaded assignment
 
     WordList();
-    WordList(const string &word);
+    //WordList(const string &word);
 
 
     void addWord(const string &);
@@ -36,6 +36,12 @@ WordList::WordList(const WordList& org){
     for (int i = 0; i < size_; i++) {
         wordArray_[i] = WordOccurrence(org.wordArray_[i].getWord(), org.wordArray_[i].getNum());
     }
+}
+
+WordList::WordList() {
+    size_ = 0;
+
+    wordArray_ = new WordOccurrence;
 }
 
 WordList::~WordList() {
