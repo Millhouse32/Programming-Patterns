@@ -23,11 +23,11 @@ int main (int argc, char* argv[]){
    filename1 = argv[1];
    filename2 = argv[2];
    
-   // opens both files as read only
+   
    std::ifstream file1;
    std::ifstream file2;
 
-   // open file
+   // open file 1
    file1.open(filename1);
    
    if (file1.fail()){
@@ -35,6 +35,7 @@ int main (int argc, char* argv[]){
       exit(0);
    }
 
+    // open file 2
    file2.open(filename2);
    if (file2.fail()){
       std::cerr << "Error opening file 2" << std::endl;
@@ -81,6 +82,7 @@ int main (int argc, char* argv[]){
             line2.assign(1, ' ');
         }
 
+        // gets legth of shorter line
         int val;
         if (line1.length() < line2.length()) {
             val = line1.length();
@@ -99,6 +101,7 @@ int main (int argc, char* argv[]){
             }
         }
 
+        // outputs differences between lines with line number and position
         if (difference) {
             std::string output = "file2.txt: " + std::to_string(lineCount) + ": ";
             std::cout << output << line1 << std::endl;
@@ -107,12 +110,13 @@ int main (int argc, char* argv[]){
             spaces.assign(output.length() + spaceCount, ' ');
             std::cout << spaces << "^";
         }
-
+    // reset variables and add new line for cleaner output
     std::cout << "\n";
     difference = false;
     lineCount++;
     spaceCount = 0;
    }
+   // close files
    file1.close();
    file2.close();
    return 0;
