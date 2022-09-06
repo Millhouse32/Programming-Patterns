@@ -44,6 +44,23 @@ WordList::~WordList() {
 }
 
 void WordList::printList() {
+    int positions[size_];
     
+    // sorting
+    for (int i = 1; i < size_; i++) {
+        WordOccurrence key = wordArray_[i];
+        int j = i - 1;
+        while (key.getNum() < wordArray_[i].getNum() && j >= 0) {
+            wordArray_[j+i] = wordArray_[j];
+            --j;
+        }
+        wordArray_[j+1] = key;
+    }
+
+    // printing
+    cout << "Words and their Occurrences" << endl;
+    for (int i = size_-1; i >=0; i--) {
+        cout << wordArray_[i].getWord() << ": " << wordArray_[i].getNum() << endl;
+    }
 }
 
