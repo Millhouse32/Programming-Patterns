@@ -43,3 +43,7 @@ WordList::~WordList() {
     delete[] wordArray_;
 }
 
+void WordList::printList() {
+    
+}
+
