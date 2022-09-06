@@ -1,38 +1,44 @@
 // testing the implementation of class WordList 
 // Wayne Cheng
 // 1/20/2018
+#include <iostream>
+#include <stdio.h>
+#include <fstream>
+#include <sstream>
 
-#include  
-#include  
 #include "WordList.h" // class definitions 
 using namespace std; 
 
-void testfunc(WordList); // function to test pass-by-value for WordList class 
-
-int main()
+int main(int argc, char* argv[])
 { 
-	WordList wl; 
-	
-	// testing regular member functions 
-	wl.addWord("one"); 
-	wl.addWord("one"); // adding duplicate 
-	wl.addWord("two"); 
-	wl.addWord("three"); 
-	cout << "word list is:\n"; 
-	wl.printList(); 
-	
-	WordList wl2, wl3; 
-	
-	wl3=wl2=wl; // testing overloaded assignment 
-	wl3=wl3; // testing protection against self-assingment 
-	testfunc(wl); // testing copy constructor 
-	wl.printList(); // if destructor is implemented correctly 
-		     // this should print properly after testfunc completes 
-} // tests pass-by-value for object of class varArray 
+	// verifies the command line arguments... exits if incorrect
+	if (argc != 2){
+		cerr << "Program required 1 command line arugement!" << endl;
+		exit(0);
+	}
 
-void testfunc(WordList myList)
-{ 
-	// copy constructor is invoked on "myList" 
-	cout << "word list in testfunc: \n"; 
-	myList.printList(); 
-} // destructor is invoked when "myList" goes out of scope 
+	// variable that holds filename
+	string filename;
+
+	filename = argv[1];
+
+	// file conents
+	WordList wl;
+
+	ifstream file(filename);
+	string word;
+
+	while (file >> word) {
+		for (int i = 0; i < word.size(); ++i) {
+			if (ispunct(word[i])) {
+				word.erase(i--, 1);
+			}
+		}
+		if (word != " " && word != "\n" && word != "")
+			wl.addWord(word);
+	}
+
+	wl.printList();
+
+	return 0;
+} 
