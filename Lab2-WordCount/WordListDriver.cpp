@@ -1,9 +1,8 @@
 // testing the implementation of class WordList 
 // Wayne Cheng
 // 1/20/2018
-
-#include  
-#include  
+#include <iostream>
+#include <stdio.h>
 #include "WordList.h" // class definitions 
 using namespace std; 
 

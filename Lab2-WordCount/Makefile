@@ -1,10 +1,10 @@
-all: WordCount
+all: WordListDriver
 
-WordCount: WordCount.cpp
-	clang++ -o WordCount WordCount.cpp
+WordListDriver: WordListDriver.cpp
+	clang++ -o WordList WordListDriver.cpp
 
 run:
-	./WordCount
+	./WordList
 
 clean:
-	rm -f WordCount
+	rm -f WordList
