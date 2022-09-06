@@ -64,3 +64,21 @@ void WordList::printList() {
     }
 }
 
+void WordList::addWord(const string& word){
+    if (size_ == 0) {
+        wordArray_[0] = WordOccurrence(word, 1);
+        size_++;
+    }
+    
+    else {
+        for (int i = 0; i < size_; i++) {
+            if (wordArray_[i].matchWord(word)) {
+                wordArray_[i].increment();
+                return;
+            }
+        }
+        wordArray_[size_] = WordOccurrence(word, 1);
+        size_++;
+    }
+}
+

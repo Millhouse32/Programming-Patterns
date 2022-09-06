@@ -45,7 +45,10 @@ WordOccurrence::WordOccurrence(const string& word, int num) {
 }
 
 bool WordOccurrence::matchWord(const string &word){
-    
+    if (word == word_) {
+        return true;
+    }
+    return false;
 }
 
 void WordOccurrence::increment() {
