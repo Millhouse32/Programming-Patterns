@@ -15,8 +15,6 @@ public:
     WordList& operator = (const WordList& rhs); // overloaded assignment
 
     WordList();
-    WordList(const string &word);
-
 
     void addWord(const string &);
     void printList();
@@ -28,28 +26,18 @@ private:
     int size_ ;
 };
 
-WordList::WordList(const WordList& org){
-    size_ = org.size_;
-
-    wordArray_ = new WordOccurrence[org.size_];
-    // copy each element of org.wordArray_ to this.wordArray_
-    for (int i = 0; i < size_; i++) {
-        wordArray_[i] = WordOccurrence(org.wordArray_[i].getWord(), org.wordArray_[i].getNum());
-    }
-}
-
 WordList::WordList() {
     size_ = 0;
 
-    wordArray_ = new WordOccurrence;
+    wordArray_ = new WordOccurrence[size_];
 }
 
-WordList::WordList(const string &word) {
-    size_ = 1;
-
-    wordArray_ = new WordOccurrence[1];
-
-    addWord(word);
+WordList::WordList(const WordList &wl){
+  size_ = wl.size_;
+  wordArray_ = new WordOccurrence[size_];
+  for(int i = 0; i < size_; ++i){
+    wordArray_[i] = wl.wordArray_[i];
+  }
 }
 
 WordList::~WordList() {
@@ -62,7 +50,7 @@ WordList& WordList::operator=(const WordList &rhs) {
         delete[] wordArray_;
         size_ = rhs.size_;
         wordArray_ = new WordOccurrence[size_];
-        for (int i = 0; i < size_; i++){
+        for (int i = 0; i < size_; ++i){
             wordArray_[i] = rhs.wordArray_[i];
         }
     }
@@ -70,57 +58,50 @@ WordList& WordList::operator=(const WordList &rhs) {
 }
 
 void WordList::printList() {
-    int positions[size_];
-    
-    // sorting
-    for (int i = 1; i < size_; i++) {
-        WordOccurrence key = wordArray_[i];
-        int j = i - 1;
-        while (key.getNum() < wordArray_[i].getNum() && j >= 0) {
-            wordArray_[j+i] = wordArray_[j];
-            --j;
+    // printing
+    WordOccurrence obj;
+    int j,k;
+    for (int i = 1; i < size_; ++i) {
+        obj = wordArray_[i];
+        k = wordArray_[i].getNum();
+        j = i - 1;
+        while (j >= 0 && wordArray_[i].getNum() > k) {
+            wordArray_[j+1] = wordArray_[j];
+            j = j -1;
         }
-        wordArray_[j+1] = key;
+        wordArray_[j+1] = obj;
     }
 
-    // printing
-    cout << "Words and their Occurrences" << endl;
-    for (int i = size_-1; i >=0; i--) {
-        cout << wordArray_[i].getWord() << ": " << wordArray_[i].getNum() << endl;
-    }
+        string word;
+        int num;
+
+        cout << "Word List\n" << endl;
+        cout << "Word:\tOccurrences:" << endl; 
+        for (int i = 0; i < size_; ++i) {
+            num = wordArray_[i].getNum();
+            word = wordArray_[i].getWord();
+            cout << setw(15) << left << word << setw(5) << right << num << endl;
+        }
 }
 
 void WordList::addWord(const string& word){
-    if (size_ == 0) {
-        WordOccurrence temp = WordOccurrence(word, 1);
-        wordArray_ = new WordOccurrence[1];
-        wordArray_[0] = temp;
-        size_++;
-    }
-    
-    else {
-        bool found = false;
-        for (int i = 0; i < size_; i++) {
-            if (wordArray_[i].matchWord(word)) {
-                wordArray_[i].increment();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            size_++;
-            WordOccurrence *newArray;
-            newArray = new WordOccurrence();
-            for (int i = 0; i < size_; i++) {
-                if (i != size_-1) {
-                    newArray[i] = wordArray_[i];
-                }
-                else{
-                    newArray[i] = WordOccurrence(word, 1);
-                }
-            }
-            wordArray_ = newArray;
+
+    // check if word is already in list
+    for (int i = 0; i < size_; ++i) {
+        if (wordArray_[i].matchWord(word)){
+            wordArray_[i].increment();
+            return;
         }
     }
+
+    // add word if not in list
+    WordList temp(*this);
+    ++size_;
+    delete[] wordArray_;
+    wordArray_ = new WordOccurrence[size_];
+    for (int i = 0; i < size_-1; i++) {
+        wordArray_[i] = temp.wordArray_[i];
+    }
+    wordArray_[size_ -1] = WordOccurrence(word, 1);
 }
 

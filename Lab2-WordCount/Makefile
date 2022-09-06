@@ -1,10 +1,14 @@
 all: WordListDriver
 
+.SILENT:
+
 WordListDriver: WordListDriver.cpp
-	clang++ -o WordList WordListDriver.cpp
+	clang++ -o WordCount WordListDriver.cpp
 
 run:
-	./WordList
+	@./WordCount $(filter-out $@, $(MAKECMDGOALS))
+%:
+	@true
 
 clean:
-	rm -f WordList
+	rm -f WordCount
