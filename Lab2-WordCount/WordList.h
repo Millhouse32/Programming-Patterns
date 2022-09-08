@@ -58,29 +58,23 @@ WordList& WordList::operator=(const WordList &rhs) {
 }
 
 void WordList::printList() {
-    // printing
-    WordOccurrence obj;
-    int j,k;
-    for (int i = 1; i < size_; ++i) {
-        obj = wordArray_[i];
-        k = wordArray_[i].getNum();
-        j = i - 1;
-        while (j >= 0 && wordArray_[i].getNum() > k) {
-            wordArray_[j+1] = wordArray_[j];
-            j = j -1;
+    // sorting from greatest to least
+        int left, right;
+        for (int j = 0; j < size_; j++){
+            left = 0;
+            right = 1;
+            for (int i = 0; i < size_-1; ++i) {
+                if (wordArray_[left].getNum() < wordArray_[right].getNum()){
+                    std::swap(wordArray_[left], wordArray_[right]);
+                }
+                ++left;
+                ++right;
+            }
         }
-        wordArray_[j+1] = obj;
-    }
-
-        string word;
-        int num;
-
-        cout << "Word List\n" << endl;
-        cout << "Word:\tOccurrences:" << endl; 
-        for (int i = 0; i < size_; ++i) {
-            num = wordArray_[i].getNum();
-            word = wordArray_[i].getWord();
-            cout << setw(15) << left << word << setw(5) << right << num << endl;
+        cout << std::left << std::setw(10) << "Word" << setw(10) << "Occurrence" << "\n";
+        // printing
+        for (int i = 0; i < size_; ++i){
+            cout << setw(10) << wordArray_[i].getWord() << setw(10) << wordArray_[i].getNum() << endl;
         }
 }
 
@@ -103,5 +97,11 @@ void WordList::addWord(const string& word){
         wordArray_[i] = temp.wordArray_[i];
     }
     wordArray_[size_ -1] = WordOccurrence(word, 1);
+}
+
+std::string getRightPaddingString(std::string const &str, int n, char paddedChar='.') {
+    std::ostringstream ss;
+    ss << std::left << std::setfill(paddedChar) << std::setw(n) << str;
+    return ss.str();
 }
 
