@@ -74,9 +74,10 @@ void WordList::printList() {
             }
         }
         cout << std::left << std::setw(15) << "Word" << setw(10) << "Occurrence" << "\n";
+        cout << getRightPaddingString("", 25, '-') << endl;
         // printing
         for (int i = 0; i < size_; ++i){
-            cout << getRightPaddingString(wordArray_[i].getWord(), 15, '.') << wordArray_[i].getNum() << endl;
+            cout << getRightPaddingString(wordArray_[i].getWord(), 20, '.') << wordArray_[i].getNum() << endl;
         }
 }
 
