@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "WordOccurrence.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ public:
 
     void addWord(const string &);
     void printList();
+    std::string getRightPaddingString(std::string const &str, size_t s, char paddingChar);
 private:
     // a dynamically allocated array of WordOccurrences
     // may or may not be stored
@@ -71,10 +73,10 @@ void WordList::printList() {
                 ++right;
             }
         }
-        cout << std::left << std::setw(10) << "Word" << setw(10) << "Occurrence" << "\n";
+        cout << std::left << std::setw(15) << "Word" << setw(10) << "Occurrence" << "\n";
         // printing
         for (int i = 0; i < size_; ++i){
-            cout << setw(10) << wordArray_[i].getWord() << setw(10) << wordArray_[i].getNum() << endl;
+            cout << getRightPaddingString(wordArray_[i].getWord(), 15, '.') << wordArray_[i].getNum() << endl;
         }
 }
 
@@ -99,9 +101,12 @@ void WordList::addWord(const string& word){
     wordArray_[size_ -1] = WordOccurrence(word, 1);
 }
 
-std::string getRightPaddingString(std::string const &str, int n, char paddedChar='.') {
-    std::ostringstream ss;
-    ss << std::left << std::setfill(paddedChar) << std::setw(n) << str;
-    return ss.str();
+std::string WordList::getRightPaddingString(std::string const &str, size_t s, char paddedChar) {
+    if (str.size() < s){
+        return str + std::string(s-str.size(), paddedChar);
+    }
+    else{
+        return str;
+    }
 }
 
