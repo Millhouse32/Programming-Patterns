@@ -2,9 +2,8 @@
 // Wayne Cheng
 // 1/25/2018
 
-#include  
-#include  
-#include "Collection.h" // template definition 
+ 
+#include "list.h" // template definition 
 using namespace std; 
 
 int main()

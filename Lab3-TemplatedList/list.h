@@ -3,7 +3,7 @@
 // 2/01/18 
 
 #ifndef LIST_H_ 
-#define LIST_H_ 
+#define LIST_H_
 
 // the pointer part of every list is the same 
 // lists differ by data part 
@@ -31,21 +31,21 @@ class node
 	private: 
 	T data_; 
 	node *next_; 
-}; 
+};
 
 // 
 // member functions for node 
 // 
 template <typename T>
-node* node::getNext()const
+node<T>* node<T>::getNext()const
 { 
 	return next_; 
 } 
 
 template <typename T>
-void node::setNext(node *const next)
+void node<T>::setNext(node<T> *const next)
 { 
 	next_=next; 
-} 
+}
 
-#endif // LIST_H_ 
+#endif // LIST_H_
