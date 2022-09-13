@@ -2,15 +2,15 @@
 // Wayne Cheng
 // 1/25/2018
 
-#include  
-#include  
+ 
 #include "Collection.h" // template definition 
+#include <iostream>
 using namespace std; 
 
 int main()
 { 
 	// manipulating integers 
-	Collection cone; 
+	Collection<int> cone; 
 	cout << "Integer collection: "; 
 	cone.addItem(1); 
 	cone.addItem(2); 
@@ -20,15 +20,15 @@ int main()
 	cone.printCollection(); 
 
 	// manipulating strings string 
-	sa[] = {"yellow", "orange", "green", "blue"}; 
-	Collection ctwo; 
+	string sa[] = {"yellow", "orange", "green", "blue"}; 
+	Collection<string> ctwo; 
 	for(auto s : sa) 
 		ctwo.addItem(s); 
 	cout << "String collection: "; 
 	ctwo.printCollection(); 
 
 	// manipulating character collections individal collections 
-	Collection a2g, h2n, o2u; 
+	Collection<char> a2g, h2n, o2u; 
 	for(char c='a'; c <='g'; ++c) 
 		a2g.addItem(c); 
 
@@ -38,12 +38,12 @@ int main()
 		o2u.addItem(c); 
 
 	// collection of collections 
-	Collection> cpile; 
+	Collection<Collection<char> > cpile; 
 
 	// adding individual collections 
 	cpile.addItem(a2g); 
-	cpile.addItem(h2n); c
-	pile.addItem(o2u); 
+	cpile.addItem(h2n);
+	cpile.addItem(o2u); 
 
 	// printing characters from last collection added 
 	cout << "Last added character collection: "; 
