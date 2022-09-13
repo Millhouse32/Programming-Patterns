@@ -11,6 +11,6 @@ Modify “list.h” and “uselist.cpp” as follows. Create a new templated cla
 Work completed by Nicholas Miller using file provided by Wayne Cheng
 
 ## Usage:
-- **make** compiles the program by executing 'clang++ -std=c++11 -o lab3 lab3.cpp
+- **make** compiles the program by executing 'clang++ -std=c++11 -o lab3 lab3.cpp'
 - **make run** executes ./lab3
 - **make clean** removes 'lab3' executable file
