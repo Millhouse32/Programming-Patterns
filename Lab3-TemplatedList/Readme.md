@@ -6,3 +6,11 @@ Modify “list.h” and “uselist.cpp” as follows. Create a new templated cla
 •	removeItem(): takes an item as the argument and removes all instances of this item from the collection. 
 •	lastItem(): returns the last item added to the collection. 
 •	printCollection(): prints all items in the collection. The printout does not have to be in order. 
+
+## Credits:
+Work completed by Nicholas Miller using file provided by Wayne Cheng
+
+## Usage:
+- **make** compiles the program by executing 'clang++ -std=c++11 -o lab3 lab3.cpp
+- **make run** executes ./lab3
+- **make clean** removes 'lab3' executable file
