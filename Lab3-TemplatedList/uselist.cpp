@@ -5,18 +5,19 @@
 #include <iostream> 
 #include "list.h" 
 using namespace std;
+using std::cout; using std::end;
 
 // list template
 int main()
 { 
-	node *head, *currentPtr; 
+	node<int> *head, *currentPtr; 
 	// 
 	// integer list manipulation 
 	// 
 	// first node 
-	head =new node; 
+	head =new node<int>; 
 	head->setData(1); 
-	currentPtr=new node; 
+	currentPtr=new node<int>; 
 
 	// second node 
 	currentPtr->setData(2); 
@@ -39,14 +40,14 @@ int main()
 	// character list manipulation 
 	// 
 	// allocating head node 
-	node *charHead = new node; 
-	node *current = charHead; 
+	node<char> *charHead = new node<char>; 
+	node<char> *current = charHead; 
 	current->setData('a'); 
 
 	// creating list 
 	for(char letter = 'b'; letter <= 'z'; ++letter)
 	{ 
-		node *newNode = new node; 
+		node<char> *newNode = new node<char>; 
 		newNode->setData(letter); 
 		current->setNext(newNode); 
 		current = newNode; 
