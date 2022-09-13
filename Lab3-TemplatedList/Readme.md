@@ -12,5 +12,6 @@ Work completed by Nicholas Miller using file provided by Wayne Cheng
 
 ## Usage:
 - **make** compiles the program by executing 'clang++ -std=c++11 -o lab3 lab3.cpp'
+- **make test** runs lab3 test suite
 - **make run** executes ./lab3
-- **make clean** removes 'lab3' executable file
+- **make clean** removes 'lab3' and lab3Test executable files
