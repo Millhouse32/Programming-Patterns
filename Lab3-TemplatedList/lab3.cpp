@@ -16,8 +16,10 @@ int main()
 	cone.addItem(2); 
 	cone.addItem(3); 
 	cone.printCollection(); 
+	cout << endl;
 	cone.removeItem(2); 
 	cone.printCollection(); 
+	cout << endl;
 
 	// manipulating strings string 
 	string sa[] = {"yellow", "orange", "green", "blue"}; 
@@ -26,6 +28,7 @@ int main()
 		ctwo.addItem(s); 
 	cout << "String collection: "; 
 	ctwo.printCollection(); 
+	cout << endl;
 
 	// manipulating character collections individal collections 
 	Collection<char> a2g, h2n, o2u; 
@@ -47,5 +50,6 @@ int main()
 
 	// printing characters from last collection added 
 	cout << "Last added character collection: "; 
-	cpile.lastItem().printCollection(); 
+	cpile.lastItem().printCollection();
+	cout << endl;
 } 

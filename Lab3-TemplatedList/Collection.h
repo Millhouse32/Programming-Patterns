@@ -12,7 +12,7 @@ public:
     void addItem(const T&);
     void removeItem(const T&);
     T lastItem() const {return front_->getData();}
-    void printCollection();
+    std::string printCollection();
 
 private:
     node<T> *front_;
@@ -52,12 +52,15 @@ void Collection<T>::removeItem(const T &item) {
 }
 
 template<typename T>
-void Collection<T>::printCollection() {
+std::string Collection<T>::printCollection() {
+    std::string output;
     node<T> *temp = front_;
     while (temp != nullptr) {
+        output += temp->getData();
         std::cout << temp->getData() << " ";
         temp = temp->getNext();
     }
+    return output;
 }
 
 #endif // COLLECTION_H
