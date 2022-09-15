@@ -116,7 +116,7 @@ void readRoster(std::list<Student>& roster, std::string filename) {
     std::ifstream course(filename);
     int i = 0;
     std::string currentCourse;
-    while (filename.at(i) != ".") {
+    while (filename.at(i) != '.') {
         currentCourse += filename.at(i);
         ++i;
     }
