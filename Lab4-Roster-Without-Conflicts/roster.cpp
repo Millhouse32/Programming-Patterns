@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 
     // eliminate duplicates
     masterList.unique();
-    std::cout << "\n All students\n last name, first name: courses enrolled\n";
+    std::cout << "\nAll students\nlast name, first name: courses enrolled\n";
     printRoster(masterList);
 }
 
@@ -67,8 +67,8 @@ void readRoster(std::list<std::string>& roster, std::string filename) {
         if (inList == false) {
             roster.push_back(last + ", " + first + ": " + currentCourse);
         }
-        course.close();
     }
+    course.close();
 }
 
 // printing list

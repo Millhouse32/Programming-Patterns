@@ -17,7 +17,7 @@ class Student {
         
         Student(const Student & org) = default;
 
-        std::string print() const { return lastName_ + ", " + firstName_; }
+        std::string print() const;
         
         void addCourse(const std::string course) { classes_.push_back(course); }
         
@@ -81,11 +81,15 @@ int main(int argc, char* argv[]) {
     // read dropouts
     std::list<Student> dropouts;
     readRoster(dropouts, argv[argc-1]);
-    std::cout << "\n\n dropouts \n";
+    std::cout << "\n\nDropouts: \n";
     printRoster(dropouts);
 
     // master list of students
     std::list<Student> masterList;
+
+    for(auto& lst : courseStudents) {
+        masterList.splice(masterList.end(), lst);
+    }
 
     std::cout << "\n\n Master list unsorted: \n";
     printRoster(masterList);
@@ -94,19 +98,19 @@ int main(int argc, char* argv[]) {
     masterList.sort();
 
     // print sorted
-    std::cout << "\n\n Master list sorted: \n";
+    std::cout << "\n\nMaster list sorted: \n";
     printRoster(masterList);
 
     // get rid of repeats
     masterList.unique();
-    std::cout << "\n\n Master list without repeats \n";
+    std::cout << "\n\nMaster list without repeats: \n";
     printRoster(masterList);
 
     // remove droputs
     for (const auto& str : dropouts) {
         masterList.remove(str);
     }
-    std::cout << "\n\n Master list without dropouts: \n";
+    std::cout << "\n\nMaster list without dropouts: \n";
     printRoster(masterList);
 
     return 0;
@@ -119,6 +123,9 @@ void readRoster(std::list<Student>& roster, std::string filename) {
     while (filename.at(i) != '.') {
         currentCourse += filename.at(i);
         ++i;
+    }
+    if (currentCourse == "dropouts") {
+        currentCourse = "";
     }
 
     std::string first;
