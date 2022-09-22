@@ -53,17 +53,17 @@ int main () {
     list<list<string>> masterList;
     masterList = roster;
 
-    cout << "\n Master list unsorted \n";
+    cout << "\nMaster list unsorted \n";
     printRoster(masterList);
 
     // sort master list
     masterList.sort();
-    cout << "\n\n Master List sorted \n";
+    cout << "\n\nMaster List sorted \n";
     printRoster(masterList);
 
     // remove duplicates
     masterList.unique();
-    cout << "\n\n Master list with no duplicates\n";
+    cout << "\n\nMaster list with no duplicates\n";
     printRoster(masterList);
 
     bool flag = false;
@@ -84,7 +84,7 @@ int main () {
       }
     }
 
-    cout << "\n\n Master list with dropouts removed\n";
+    cout << "\n\nMaster list with dropouts removed\n";
     printRoster(masterList);
 
     // remove students concurrently enrolled in cs4 and any other course
