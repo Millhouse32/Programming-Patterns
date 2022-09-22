@@ -1,7 +1,5 @@
-/* 
-    Lab 4
-    Nicholas Miller 
-*/
+// Lab 4
+// Nicholas Miller
 
 #include <fstream>
 #include <iostream>
@@ -10,70 +8,154 @@
 #include <string>
 #include <cstdlib>
 
-// read list form file
-void readRoster(std::list<std::string>& roster, std::string filename);
+using std::ifstream;
+using std::string;
+using std::getline;
+using std::list;
+using std::cout;
+using std::vector;
+using std::move;
+using std::endl;
+
+// read list from file
+void readRoster(list<list<string>>& roster, string filename);
 
 // print list
-void printRoster(const std::list<std::string>& roster);
+void printRoster(const list<list<string>> & roster);
 
-int main(int argc, char* argv[]) {
-    if (argc <= 1 ) {
-        std::cout << "Usage: " << argv[0]
-        << " list of courses, dropouts last" << std::endl;
-        exit(1);
+int main () {
+    int size = 4;
+    string files[4];
+
+    files[0] = "cs1.txt";
+    files[1] = "cs2.txt";
+    files[2] = "cs3.txt";
+    files[3] = "cs4.txt";
+
+    string file5 = "dropouts.txt";
+
+    // vector of class students
+    vector<list<string>> courseStudents;
+
+    list<list<string>> roster;
+    for (int i = 0 ; i < size; i++) {
+      readRoster(roster, files[i]);
+      cout << "\n\n" << files[i] << "\n";
+      printRoster(roster);
     }
 
-    // vector of courses of students
-    std::vector<std::list<std::string>> courseStudents;
+    // read dropouts
+    list<list<string>> dropouts;
+    readRoster(dropouts, file5);
+    cout << "\n\nDropouts:\n";
+    printRoster(dropouts);
 
-    std::list<std::string> roster;
-    for (int i = 1; i < argc; ++i) {
-        readRoster(roster, argv[i]);
-    }
-    courseStudents.push_back(roster);
+    list<list<string>> masterList;
+    masterList = roster;
 
-    // master list of students
-    std::list<std::string> masterList = move(roster);
-
-    // sort msater list
-    masterList.sort();
-
-    // eliminate duplicates
-    masterList.unique();
-    std::cout << "\nAll students\nlast name, first name: courses enrolled\n";
+    cout << "\n Master list unsorted \n";
     printRoster(masterList);
-}
 
-void readRoster(std::list<std::string>& roster, std::string filename) {
-    std::ifstream course (filename);
-    int i = 0;
-    std::string currentCourse;
-    while(filename.at(i) != '.') {
-        currentCourse += filename.at(i);
-        ++i;
-    }
+    // sort master list
+    masterList.sort();
+    cout << "\n\n Master List sorted \n";
+    printRoster(masterList);
 
-    std::string first;
-    std::string last;
-    bool inList = false;
-    while (course >> first >> last) {
-        for (auto& e : roster) {
-            if(e.find(last) != std::string::npos) {
-                inList = true;
-                e = e + ' ' + currentCourse;
-                break;
+    // remove duplicates
+    masterList.unique();
+    cout << "\n\n Master list with no duplicates\n";
+    printRoster(masterList);
+
+    bool flag = false;
+    for (const auto& drop : dropouts) {
+      list<string> temp;
+      for(auto& str : masterList) {
+         // check if name is of a dropout
+         if (str.front() == drop.front()) {
+            for (const auto& e : str) {
+               temp.push_back(e);
             }
-        }
-        if (inList == false) {
-            roster.push_back(last + ", " + first + ": " + currentCourse);
-        }
+            flag = true;
+         }
+      }
+      if (flag) {
+         masterList.remove(temp);
+         flag = false;
+      }
     }
-    course.close();
+
+    cout << "\n\n Master list with dropouts removed\n";
+    printRoster(masterList);
+
+    // remove students concurrently enrolled in cs4 and any other course
+    cout << "Removing students concurrently enrolled in cs4 and any other course\n";
+    bool remove = false;
+
+    for (int i = masterList.size()-1; i >=0; i--) {
+      list<string> temp;
+      list<string> removal;
+
+      for (auto& str : masterList) {
+         temp.clear();
+         removal.clear();
+         for (const auto& e : str) {
+            removal.push_back(e);
+            temp.push_back(e);
+         }
+         temp.pop_front();
+
+         if (temp.front() == "cs4.txt") {
+            // do not remove
+         }
+         else if (temp.back() == "cs4.txt") {
+            remove = true;
+            break;
+         }
+         else {
+            // do not remove
+         }
+      }
+      if (remove) {
+        remove = false;
+        masterList.remove(removal);
+      }
+    }
+
+    // print master list after removal
+    cout << "\n\nMaster list after removal\n";
+    printRoster(masterList);
+
+    return 0;
 }
 
-// printing list
-void printRoster(const std::list<std::string>& roster) {
-    for (const auto& str : roster) {
-        std::cout << str << std::endl;
-    }
+void readRoster(list<list<string>>& roster, string filename) {
+
+   ifstream course (filename);
+   string first, last;
+   bool flag = true;
+
+   while (course >> first >> last) {
+      for (auto& str: roster) {
+         if (str.front() == first + ' ' + last) {
+            str.push_back(filename);
+            flag = false;
+         }
+      }
+      if (flag) {
+         list<string> temp;
+         temp.push_back(first + ' ' + last);
+         temp.push_back(filename);
+         roster.push_back(temp);
+      }
+      flag = true;
+   }
+}
+
+void printRoster(const list<list<string>>& roster) {
+   for (const auto& str: roster) {
+      for (const auto& i : str) {
+         cout << i << " ";
+      }
+      cout << endl;
+   }
 }
