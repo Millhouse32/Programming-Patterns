@@ -9,7 +9,7 @@ she is either in any of the classes besides CS4 or in CS4 alone.
 Authored by Nicholas Miller
 
 ## Usage
-**make** builds roster.cpp and outputs executable names roster
+**make** builds using 'clang++ -std=c++11 -o roster roster.cpp'
 
 **make run** executes roster
 
