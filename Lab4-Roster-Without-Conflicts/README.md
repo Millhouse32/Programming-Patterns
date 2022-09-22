@@ -7,3 +7,10 @@ she is either in any of the classes besides CS4 or in CS4 alone.
 
 ## Credits
 Authored by Nicholas Miller
+
+## Usage
+**make** builds roster.cpp and outputs executable names roster
+
+**make run** executes roster
+
+**make clean** cleans directory of executable
