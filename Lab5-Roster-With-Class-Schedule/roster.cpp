@@ -54,6 +54,41 @@ void readRoster(list<Student>& roster, string filename);
 void printRoster(const list<Student>& roster);
 
 int main(){
+    int size = 4;
+    string files[4];
+    files[0] = "cs1.txt";
+    files[1] = "cs2.txt";
+    files[2] = "cs3.txt";
+    files[3] = "cs4.txt";
+
+    map<Student, list<string>> masterList; // master list of students
+
+    for (int i = 0; i < 4; i++) {
+        string currentCourse;
+        string filename = files[i];
+        int index = files[i].find('.');
+        currentCourse = files[i].substr(0, index);
+
+        list<string> classes;
+        classes.push_back(currentCourse);
+
+        list<Student> roster;
+        readRoster(roster, filename);
+        for (auto e : roster) {
+            auto ret = masterList.insert(make_pair(e, classes));
+            if (!ret.second) {
+                ret.first->second.push_back(currentCourse);
+            }
+        }
+    }
+
+    for (auto e : masterList) {
+        cout << e.first.print() + " :";
+        for (auto str : e.second) {
+            cout << " " + str + " ";
+        }
+        cout << endl;
+    }
     return 0;
 }
 
