@@ -19,6 +19,6 @@ map<string, list<string>> studentEntries;
 Work completed by Nicholas Miller
 
 ## Usage
-**make** builds the program with 'g++ -std=c++11 roster.cpp -o roster'
-**make run** executes with './roster'
-**make clean** removes executable 'roster'
+- **make** builds the program with 'g++ -std=c++11 roster.cpp -o roster'
+- **make run** executes with './roster'
+- **make clean** removes executable 'roster'
