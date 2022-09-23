@@ -48,3 +48,21 @@ class Student {
         string firstname_;
         string lastname_;
 };
+
+void readRoster(list<Student>& roster, string filename);
+
+void printRoster(const list<Student>& roster);
+
+int main(){
+    return 0;
+}
+
+void readRoster(list<Student>& roster, string filename) {
+    ifstream course(filename);
+
+    string first, last;
+    while (course >> first >> last) {
+        roster.push_back(Student(first, last));
+    }
+    course.close();
+}
