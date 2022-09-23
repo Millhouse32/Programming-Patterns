@@ -1,7 +1,7 @@
 all: build
 
 build:
-	g++ -std=c++11 roster.cpp -o roster
+	clang++ -std=c++11 roster.cpp -o roster
 
 run:
 	./roster
