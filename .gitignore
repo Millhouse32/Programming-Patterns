@@ -1,11 +1,7 @@
-.vscode/*
-*.vscode
-*.DS_Store
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+*
+!*.cpp
+!Makefile
+!.txt
 
 # Local History for Visual Studio Code
 .history/
