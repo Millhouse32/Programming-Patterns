@@ -1,16 +1,11 @@
-.vscode/*
- *.vscode
- *.DS_Store
- !.vscode/settings.json
- !.vscode/tasks.json
- !.vscode/launch.json
- !.vscode/extensions.json
- !.vscode/*.code-snippets
+*.vscode
+*.DS_Store
+*.vscode/
 
- # Local History for Visual Studio Code
- .history/
- roster
- lab3
- lab3Test
- WordCount
- diff
+# Local History for Visual Studio Code
+.history/
+roster
+lab3
+lab3Test
+WordCount
+diff
