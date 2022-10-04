@@ -65,7 +65,7 @@ void auditEnclosures(ZooMap& animalsByEnclosure, const list<string>& sickAnimals
 	//all enclosures 
 	toRemove.insert(sickAnimals.cbegin(), sickAnimals.cend());
 
-	cout << "Anmimals to Remove:\n";
+	cout << "Animals to Remove:\n";
 	for (auto itr : toRemove) {
 		cout << itr << endl;
 	}
