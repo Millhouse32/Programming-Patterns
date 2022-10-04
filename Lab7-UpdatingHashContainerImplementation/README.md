@@ -30,7 +30,7 @@ Provide test code that declares and populates a container and then demonstrates 
 the functions you implemented.
 
 ## Credits
-Work Completed by Nicholas Miller
+Work completed by Nicholas Miller
 
 ## Usage
 - **make** builds the program using `clang++ -std=c++11 testHashmap.cpp -o testHashmap`
