@@ -60,19 +60,16 @@ int main() {
     cout << "Enter employee number to look for: "; cin >> num;
     auto it = employees.find(num);
     if (it != nullptr) {
-        cout << it->first << ":" << it->second << endl;
+        cout << it->first << ": " << it->second << endl;
     }
     else {
         cout << "employee not found" << endl;
     }
 
-   cout << "Enter employee number to fire :"; cin >> num;
+   cout << "Enter employee number to fire: "; cin >> num;
    employees.erase(num);
    auto removed = employees.find(num);
    if (removed == nullptr) {
-        cout << "Employee removes successfully" << endl;
-   }
-   else {
-    cout << "Employee not found";
+        cout << "Employee removed successfully" << endl;
    }
 }
