@@ -9,6 +9,6 @@ To carry out this modification you should modify getDuplicates function to retur
 Work completed by Nicholas Miller
 
 ## Usage
-**make** builds the program using `clang++ -std=c++11 zoo.cpp -o zoo`
-**make run** runs the program with `./zoo`
-**make clean** removes the executable from the directory
+- **make** builds the program using `clang++ -std=c++11 zoo.cpp -o zoo`
+- **make run** runs the program with `./zoo`
+- **make clean** removes the executable from the directory
