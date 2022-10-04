@@ -6,15 +6,15 @@
 
 #include <iostream> 
 #include <map>
-#include <utility>
 #include <list>
 #include <set>
-using std::list;
+#include <string>
+#include <algorithm>
 using namespace std; 
 
 // this is similar to typedef 
-using EnclosurePair = pair<string, multiset<string>>; 
-using ZooMap = map<string, multiset<string>>; 
+using EnclosurePair = pair<string, list<string>>; 
+using ZooMap = map<string, list<string>>; 
 
 // removes duplicate and sick animals form ZooMap 
 void auditEnclosures(ZooMap& animalsByEnclosure, const list<string>& sickAnimals); 
@@ -64,23 +64,27 @@ void auditEnclosures(ZooMap& animalsByEnclosure, const list<string>& sickAnimals
 	// combine the duplicates and sick animals -- we want to remove names on both lists from 
 	//all enclosures 
 	toRemove.insert(sickAnimals.cbegin(), sickAnimals.cend());
-
-	cout << "Animals to Remove:\n";
-	for (auto itr : toRemove) {
-		cout << itr << endl;
-	}
-	cout << endl;
 	
 	//Now remove all the names we need to remove using nested lambda expressions and the remove-erase-idiom 
-	// for_each(animalsByEnclosure.begin(), animalsByEnclosure.end(), [&toRemove](EnclosurePair enclosure) 
-	// { 
-	// 	auto it = remove_if(enclosure.second.begin(), enclosure.second.end(), [&toRemove](const string& name) 
-	// 	{ 
-	// 		return (toRemove.find(name) != toRemove.end()); 
-	// 	}); 
-	// 	enclosure.second.erase(it, enclosure.second.end()); 
-	// }
-	// ); 
+	for_each(animalsByEnclosure.begin(), animalsByEnclosure.end(), [&toRemove, &animalsByEnclosure](const pair<string, list<string>> enclosure) 
+	{
+		string s = enclosure.first;
+		list<string> animals = enclosure.second;
+		for (string id : enclosure.second) {
+			if (toRemove.find(id)!=toRemove.end()) {
+				for (list<string>::iterator s = animals.begin(); s != animals.end(); ++s) {
+					if (*s == id) {
+						animals.erase(s);
+						break;
+					}
+				}
+				animalsByEnclosure[s] = animals;
+
+				toRemove.erase(toRemove.find(id));
+			}
+		}
+	}
+	); 
 } 
 
 // returns a set of all animal names that appear in more than one list in the map 
