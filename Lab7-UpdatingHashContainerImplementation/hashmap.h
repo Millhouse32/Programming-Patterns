@@ -1,0 +1,205 @@
+// implementation basic hashmap (unordered container)
+// Work done by Nicholas Miller
+
+#include <iostream>
+#include <cstddef>
+#include <utility>
+#include <functional>
+#include <vector>
+#include <list>
+
+using std::vector;
+using std::list;
+using std::pair;
+using std::make_pair;
+
+//////////////////////////////////////////
+// hash function implemented as a class //
+//////////////////////////////////////////
+
+// any hash class must provide two methods: hash() and numBuckets()
+template <typename T>
+class DefaultHash {
+    public:
+        DefaultHash(size_t numBuckets = defaultNumBuckets);
+        size_t hash(const T& key) const;
+        size_t numBuckets() const { return numBuckets_; }
+    
+    private:
+        static const size_t defaultNumBuckets = 101; // deault number of buckets in the hash
+        size_t numBuckets_;
+};
+
+template <typename T>
+DefaultHash<T>::DefaultHash(size_t numBuckets): numBuckets_(numBuckets) {}
+
+// uses the division method for hashing
+// treats the key as a sequence of bytes, sums the ASCII
+// values of the bytes, and mods the total by the number of buckets
+template <typename T>
+size_t DefaultHash<T>::hash(const T& key) const {
+    size_t res = 0;
+    for (size_t i = 0; i < sizeof(key); ++i) {
+        const unsigned char b = *(reinterpret_cast<const unsigned char *>(&key) + i);
+        res += b;
+    }
+    return res % numBuckets_;
+}
+
+////////////////////////////////////////////////
+// container class                            //
+////////////////////////////////////////////////
+
+template <typename Key, typename Value,
+          typename Compare = std::equal_to<Key>,
+          typenamee Hash = DefaultHash<Key>>
+class hashmap{
+    public:
+        typedef pair<const Key, Value> Element;
+
+        // constructor
+        // invokes contructors for comparison and hash objects
+        hashmap(cosnt Compare& comp = Compare(),
+                const Hash& hash = Hash());
+        
+        Element* find(const Key& x);
+
+        pair<Value*, bool> insert(const Element& x);
+        pair<Element* bool> erase(const Key& x);
+        Value& operator[] (const Key& x);
+
+        void rehash(size_t n);
+
+    private:
+        typename list<Element>::iterator
+            findElement(const Key& x,
+                        const size_t bucket);
+        
+        size_t size_;
+        Compare comp_;
+        Hash hash_;
+
+        vector<list<Element>> elems_;
+};
+
+////////////////////////////////////////////////
+// container member functions
+////////////////////////////////////////////////
+
+template <typename Key, typename Value, typename Compare, typename Hash>
+hashmap<Key, Value, Compare, Hash>::hashmap(
+    const Compare& comp, const Hash& hash):
+    size_(0), comp_(comp), hash_(hash) {
+        elems_ = vector<list<Element>>(hash_.numBuckets());
+}
+
+template <typename Key, typename Value,
+           typename Compare, typename Hash>
+    typename list<pair<const Key, Value>>::iterator
+    hashmap<Key, Value, Compare, Hash>::findElement(const Key& x, size_t bucket){
+        for (auto it = elems_[bucket].begin(); it != elems_[bucket].end(); ++it) {
+            if (comp_(it->first, x))
+                return it;
+        }
+        reutrn elems_[bucket].end();
+    }
+
+// returns a pointer to the element with key x
+// returns nullptr if no element with this key
+template <typename Key, typename Value, typename Compare, typename Hash>
+   typename hashmap<Key, Value, Compare, Hash>::Element* // return value type
+   hashmap<Key, Value, Compare, Hash>::find(const Key& x) {
+
+   size_t bucket = hash_.hash(x);
+   auto it=findElement(x, bucket);    // use the findElement() helper   
+
+   if (it != elems_[bucket].end())
+      // found the element. Return a pointer to it.
+      return &(*it); // dereference the iterator to list 
+                     // then take the address of list element
+   
+   else // didn't find the element -- return nullptr
+      return nullptr;
+}
+
+
+// finds the element with key x, inserts an
+// element with that key if none exists yet. Returns a reference to
+// the value corresponding to that key.
+template <typename Key, typename Value, typename Compare, typename Hash>
+pair<Value*, bool> hashmap<Key, Value, Compare, Hash>::insert(const Element& x) {
+   bool inserted = false; 
+  
+   size_t bucket = hash_.hash(x.first);   
+   auto it = findElement(x.first, bucket);    // try to find the element
+
+   // if not found, insert a new one.
+   if (it == elems_[bucket].end()) {
+      ++size_;
+      elems_[bucket].push_back(x);
+      inserted = true;
+      ++it;
+   } 
+   return make_pair(&(*it).second, inserted);
+}
+
+
+// removes the Element with key x, if it exists
+template <typename Key, typename Value, typename Compare, typename Hash>
+pair<pair<const Key, Value>*, bool> hashmap<Key, Value, Compare, Hash>::erase(const Key& x) {
+   bool erased = false;
+
+   size_t bucket = hash_.hash(x);
+   auto it = findElement(x, bucket);    // try to find the element
+
+   if (it != elems_[bucket].end()) {    // the element exists, erase it
+      elems_[bucket].erase(it);
+      --size_;
+      erased = true;
+      ++it;
+      if(it != elems_[bucket].end()){
+         // erased worked and there's another elem in bucket
+         return make_pair(&(*it), erased); 
+      }
+      // return next element from different bucket here
+   }
+   return make_pair(&(*it), erased);
+}
+
+
+// returns reference to value of element with key x,
+// inserts if does not exist
+template <typename Key, typename Value, typename Compare, typename Hash>
+Value& hashmap<Key, Value, Compare, Hash>::operator[] (const Key& x) {
+
+   Element* found = find(x);
+   if (found == nullptr) { // if key not found, create new element with empty value
+      auto inserted = insert(make_pair(x, Value())); // calling default constructor on Value
+      return *inserted.first;
+   }
+   return found->second;
+}
+
+template <typename Key, typename Value, typename Compare, typename Hash>
+void hashmap<Key, Value, Compare, Hash>::rehash(size_t n){
+   vector<Element> temp;
+   // Copy all elements from elems_ to temp
+   auto bucketIt = temp.begin();
+   while(bucketIt != temp.end()){
+      auto it = elems_[bucketIt].begin();
+      while(it != elems_[bucketIt].end()){
+         temp.push_back(*it);
+      }
+      ++bucketIt;
+   }
+
+   // clear and reassign elems_
+   elems_.clear();
+   elems_ = vector<list<Element>>(n);   
+
+   // Insert all elements
+   bucketIt = temp.begin();
+   while(bucketIt != temp.end()){
+      elems_.insert(*bucketIt);
+   }
+}
