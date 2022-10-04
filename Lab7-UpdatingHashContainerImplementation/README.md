@@ -28,3 +28,11 @@ current number of buckets, no actions need to be taken.
 
 Provide test code that declares and populates a container and then demonstrates the operation of 
 the functions you implemented.
+
+## Credits
+Work Completed by Nicholas Miller
+
+## Usage
+- **make** builds the program using `clang++ -std=c++11 testHashmap.cpp -o testHashmap`
+- **make run** runs the program with `./testHashmap`
+- **make clean** removes the executable from the directory
