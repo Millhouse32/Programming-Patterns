@@ -1,6 +1,7 @@
 *.vscode
 *.DS_Store
 *.vscode/
+*.txt
 
 # Local History for Visual Studio Code
 .history/
@@ -10,3 +11,4 @@ lab3Test
 WordCount
 diff
 zoo
+test_logger
