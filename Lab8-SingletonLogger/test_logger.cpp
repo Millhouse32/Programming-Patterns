@@ -8,5 +8,5 @@ int main() {
     Logger::log().report("test log message 2");
     Logger::log().report("test log message 3");
     Logger::log().report(""); // test empty message
-    Logger::log().report("test log message. 4");
+    Logger::log().report("test log message 4");
 }
