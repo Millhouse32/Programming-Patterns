@@ -1,7 +1,7 @@
 all: build
 
 build:
-	clang++ -std=c++11 CarBuyer.cpp -o carTest
+	g++ -std=c++11 CarBuyer.cpp -o carTest
 
 run:
 	./carTest

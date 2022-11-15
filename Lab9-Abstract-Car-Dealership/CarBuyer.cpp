@@ -8,34 +8,34 @@ using namespace std;
 class CarLot {
    public: 
       CarLot();
-      Car *testDriveCar() { return ca4Sale_; }
+      Car *testDriveCar() { return car4Sale_; }
       bool lotFull();
       void startOver();
       Car *nextCar();
 
       Car *buyCar() {
          Car *bought = car4Sale_;
-         car4sale_ = factories_[rand() % factories_.size()]->requestCar();
+         car4Sale_ = factories_[rand() % factories_.size()]->requestCar();
 
          return bought;
       }
    private:
       vector<Car *> cars_;
-      Car *car4sale_;
+      Car *car4Sale_;
       vector<CarFactory *> factories_;
 };
 
 Car* CarLot::nextCar() {
-   if (car4sale_ != nullptr) {
-      cars_.push_back(car4sale_);
+   if (car4Sale_ != nullptr) {
+      cars_.push_back(car4Sale_);
    }
 
-   car4sale_ = factories_[rand() % factories_.size()]->requestCar();
-   return car4sale_;
+   car4Sale_ = factories_[rand() % factories_.size()]->requestCar();
+   return car4Sale_;
 }
 
 void CarLot::startOver() {
-   car4sale_ = nullptr;
+   car4Sale_ = nullptr;
    cars_.clear();
 }
 
@@ -55,7 +55,7 @@ CarLot::CarLot() {
    factories_.push_back(new FordFactory());
    factories_.push_back(new ToyotaFactory());
 
-   car4sale_ = factories_[rand() % factories_.size()]->requestCar();
+   car4Sale_ = factories_[rand() % factories_.size()]->requestCar();
 }
 
 CarLot *carLotPtr = nullptr;
@@ -155,8 +155,8 @@ int main() {
    while (!c1.lotFull() && found == false) {
       if (car->getMake() == make && car->getModel() == model) {
          cout << "\nThe car on the lot is a " << car->getMake() << " " << car->getModel();
-         cout << "\nI am buying a " << car->getMake() MM " " << car->getModel();
-         cout MM "\n";
+         cout << "\nI am buying a " << car->getMake() << " " << car->getModel();
+         cout << "\n";
          found = true;
       }
       else {
@@ -188,7 +188,7 @@ int main() {
    for (int i = 0; i < factories.size(); i++) {
       cout << "\n";
       cout << factories.at(i)->getLocation();
-      cout << " has " << factories.at(i)->getNumInProduction() << " cars in production";
+      cout << " has " << factories.at(i)->getNumCarsInProduction() << " cars in production";
    } cout << "\n\n";
 
    for (size_t i = 0; i < 10; ++i) {

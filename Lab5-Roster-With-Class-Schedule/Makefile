@@ -1,7 +1,7 @@
 all: build
 
 build:
-	clang++ -std=c++11 roster.cpp -o roster
+	clang++ -std=c++11 roster.cpp -o roster.exe
 
 run:
 	./roster

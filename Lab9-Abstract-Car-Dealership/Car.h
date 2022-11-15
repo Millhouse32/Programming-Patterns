@@ -3,6 +3,7 @@
 // 2/11/2018
 #include <string>
 #include <vector>
+#include <array>
 using namespace std;
 class Car
 {
@@ -34,7 +35,7 @@ Ford::Ford() {
 }
 
 Toyota::Toyota() {
-    static const array<std::string, 4>
+    static const array<std::string, 5>
         models = { "Corolla", "Camery", "Prius", "4Runner", "Yaris" };
     make_ = "Toyota";
     model_ = models[rand() % models.size()];
